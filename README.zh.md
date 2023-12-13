@@ -25,7 +25,7 @@
 - `gptToken`：OpenAI GPT token。
 - `gerritAuthBaseUrl`：Gerrit 实例的 URL。类似于：https://gerrit.local.team/a。
 - `gerritUserName`：Gerrit 用户名。
-- `gerritPassword`：Gerrit 密码。
+- `gerritPassword`：Gerrit http token(不是登录密码)。
 - `globalEnable`: 默认值为 false。插件将只会审查指定的仓库，如果设为 true，插件默认会审查所有 review 请求。
 
   为了增强安全性，建议将敏感信息，如 gptToken 和 gerritPassword，存储在一个安全的位置或文件中。本文档后续部分将提供详细的操作指南。
