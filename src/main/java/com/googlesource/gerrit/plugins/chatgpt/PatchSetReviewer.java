@@ -44,6 +44,7 @@ public class PatchSetReviewer {
             log.debug("Reduced patch set: {}", patchSet);
         }
 
+        log.info("patchSet:{}",patchSet);
         String reviewSuggestion = getReviewSuggestion(config, fullChangeId, patchSet);
         List<String> reviewBatches = splitReviewIntoBatches(reviewSuggestion);
 

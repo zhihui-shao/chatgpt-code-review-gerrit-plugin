@@ -11,7 +11,7 @@ public class UriResourceLocator {
     }
 
     public static String gerritCommentUri(String fullChangeId) {
-        return "/changes/" + fullChangeId + "/revisions/current/review";
+        return "/a/changes/" + fullChangeId + "/revisions/current/review";
     }
 
     public static String chatCompletionsUri() {

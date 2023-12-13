@@ -32,6 +32,7 @@ public class GerritClient {
                         + UriResourceLocator.gerritPatchSetUri(fullChangeId)))
                 .build();
 
+        log.info("getPatchSet request is : {}",request);
         HttpResponse<String> response = httpClientWithRetry.execute(request);
 
         if (response.statusCode() != HTTP_OK) {
@@ -41,7 +42,15 @@ public class GerritClient {
 
         String responseBody = response.body();
         log.info("Successfully obtained patch. Decoding response body.");
-        return new String(Base64.getDecoder().decode(responseBody));
+        log.info("responseBody is : {}",responseBody);
+        org.apache.commons.codec.binary.Base64 base64 = new org.apache.commons.codec.binary.Base64();
+        byte[] debytes = base64.decodeBase64(responseBody);
+
+        log.info("Decoded responseBody is : {}",new String(debytes));
+        return new String(debytes);
+
+
+        // return new String(Base64.getMimeDecoder().decode(responseBody));
     }
 
     private String generateBasicAuth(String username, String password) {
@@ -54,6 +63,8 @@ public class GerritClient {
         map.put("message", message);
         String json = gson.toJson(map);
 
+        log.info("json : {}",json);
+
         HttpRequest request = HttpRequest.newBuilder()
                 .header(HttpHeaders.AUTHORIZATION, generateBasicAuth(config.getGerritUserName(),
                         config.getGerritPassword()))
@@ -63,11 +74,15 @@ public class GerritClient {
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
+        log.info("Request Method: {}", request.method());
+        log.info("Request URI: {}", request.uri());
+        log.info("Request Headers: {}", request.headers().map());
+        log.info("Request Body: {}", json);  // Assuming json contains the request body
+
         HttpResponse<String> response = httpClientWithRetry.execute(request);
 
         if (response.statusCode() != HTTP_OK) {
             log.error("Review post failed with status code: {}", response.statusCode());
         }
     }
-
 }

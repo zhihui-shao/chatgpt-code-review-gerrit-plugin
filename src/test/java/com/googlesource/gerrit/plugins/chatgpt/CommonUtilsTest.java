@@ -16,7 +16,9 @@ public class CommonUtilsTest {
         String diffContent = readFile("reducePatchSet/patchSetInput.diff");
         String expectedReducedDiff = readFile("reducePatchSet/patchSetOutput.diff");
         String actualReducedDiff = PatchSetReviewer.reducePatchSet(diffContent);
-        assertEquals(expectedReducedDiff, actualReducedDiff);
+        System.out.println(expectedReducedDiff);
+        System.out.println(actualReducedDiff);
+        assertEquals(actualReducedDiff, expectedReducedDiff);
     }
 
     private String readFile(String filePath) throws IOException {

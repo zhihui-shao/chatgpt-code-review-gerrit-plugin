@@ -4,6 +4,8 @@ import com.github.rholder.retry.*;
 import com.google.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.ProxySelector;
+import java.net.InetSocketAddress;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -18,7 +20,10 @@ import static java.net.HttpURLConnection.HTTP_OK;
 public class HttpClientWithRetry {
     private final Retryer<HttpResponse<String>> retryer;
 
+    ProxySelector proxySelector = ProxySelector.of(new InetSocketAddress("127.0.0.1", 7890));
+
     private final HttpClient httpClient = HttpClient.newBuilder()
+            .proxy(proxySelector)
             .connectTimeout(Duration.ofMinutes(5))
             .build();
 
@@ -43,7 +48,7 @@ public class HttpClientWithRetry {
                         return false;
                     }
                 }).withWaitStrategy(WaitStrategies.fixedWait(20, TimeUnit.SECONDS))
-                .withStopStrategy(StopStrategies.stopAfterAttempt(5))
+                .withStopStrategy(StopStrategies.stopAfterAttempt(10))
                 .withRetryListener(listener)
                 .build();
     }
