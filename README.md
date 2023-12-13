@@ -29,7 +29,7 @@
 - `gptToken`: OpenAI GPT token.
 - `gerritAuthBaseUrl`: The URL of your Gerrit instance. Similar to: https://gerrit.local.team/a
 - `gerritUserName`: Gerrit username.
-- `gerritPassword`: Gerrit password.
+- `gerritPassword`: Gerrit http token(not the login password).
 - `globalEnable`: Default value is false. The plugin will only review specified repositories. If set to true, the plugin
   will by default review all pull requests.
 
