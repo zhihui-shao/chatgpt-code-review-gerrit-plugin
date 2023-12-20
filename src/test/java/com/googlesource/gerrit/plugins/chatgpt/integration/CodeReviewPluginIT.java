@@ -31,7 +31,7 @@ public class CodeReviewPluginIT {
     @Test
     public void sayHelloToGPT() throws Exception {
         when(config.getGptDomain()).thenReturn(Configuration.OPENAI_DOMAIN);
-        when(config.getGptToken()).thenReturn("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");
+        when(config.getGptToken()).thenReturn("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");
         when(config.getGptModel()).thenReturn(Configuration.DEFAULT_GPT_MODEL);
         when(config.getGptPrompt()).thenReturn(Configuration.DEFAULT_GPT_PROMPT);
 
@@ -44,8 +44,8 @@ public class CodeReviewPluginIT {
     public void getPatchSet() throws Exception {
         when(config.getGerritAuthBaseUrl()).thenReturn("http://192.168.191.1:8082");
         when(config.getGerritUserName()).thenReturn("zhihui");
-        when(config.getGerritPassword()).thenReturn("123456");
-        String patchSet = gerritClient.getPatchSet(config, "I214d87b51bf1717ff4b3da49d14a6785d45b701a");
+        when(config.getGerritPassword()).thenReturn("vdInkF18zytT96sCaAqDK+4OYHU9vSFiMX834D+XoA");
+        String patchSet = gerritClient.getPatchSet(config, "I70f9dcddd8b59dd8cfdfe000f4e40490d93c4165");
         log.info("patchSet: {}", patchSet);
         assertNotNull(patchSet);
     }
@@ -56,6 +56,6 @@ public class CodeReviewPluginIT {
         when(config.getGerritUserName()).thenReturn("zhihui");
         when(config.getGerritPassword()).thenReturn("vdInkF18zytT96sCaAqDK+4OYHU9vSFiMX834D+XoA");
 
-        gerritClient.postComment(config, "I214d87b51bf1717ff4b3da49d14a6785d45b701a", "你好");
+        gerritClient.postComment(config, "I70f9dcddd8b59dd8cfdfe000f4e40490d93c4165", "好好好","+2");
     }
 }

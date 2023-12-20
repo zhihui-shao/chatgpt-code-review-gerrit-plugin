@@ -27,12 +27,6 @@ public class OpenAiClient {
     public String ask(Configuration config, String patchSet) throws Exception {
         HttpRequest request = createRequest(config, patchSet);
 
-//        log.info("config.getGptToken(): {}",config.getGptToken());
-//        log.info("patchSet: {}",patchSet);
-//        log.info("request.method: {}",request.method());
-//        log.info("request.uri: {}",request.uri());
-//        log.info("request.headers: {}",request.headers());
-
         HttpResponse<String> response = httpClientWithRetry.execute(request);
 
         String body = response.body();

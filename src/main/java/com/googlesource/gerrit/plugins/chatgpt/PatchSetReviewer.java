@@ -49,7 +49,7 @@ public class PatchSetReviewer {
         List<String> reviewBatches = splitReviewIntoBatches(reviewSuggestion);
 
         for (String reviewBatch : reviewBatches) {
-            gerritClient.postComment(config, fullChangeId, reviewBatch);
+            gerritClient.postComment(config, fullChangeId, reviewBatch,"+2");
         }
     }
 

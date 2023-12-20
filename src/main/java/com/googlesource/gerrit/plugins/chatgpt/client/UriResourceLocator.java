@@ -7,7 +7,7 @@ public class UriResourceLocator {
     }
 
     public static String gerritPatchSetUri(String fullChangeId) {
-        return "/changes/" + fullChangeId + "/revisions/current/patch";
+        return "/a/changes/" + fullChangeId + "/revisions/current/patch";
     }
 
     public static String gerritCommentUri(String fullChangeId) {

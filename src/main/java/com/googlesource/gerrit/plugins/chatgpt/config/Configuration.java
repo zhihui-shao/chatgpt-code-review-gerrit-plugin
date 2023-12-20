@@ -11,6 +11,7 @@ public class Configuration {
 
     public static final String OPENAI_DOMAIN = "https://api.openai.com";
     public static final String DEFAULT_GPT_MODEL = "gpt-3.5-turbo";
+//    public static final String DEFAULT_GPT_PROMPT = "Act as a Code Review Helper, please review this patch set: ";
     public static final String DEFAULT_GPT_PROMPT = "Act as a Code Review Helper, please review this patch set: ";
     public static final String NOT_CONFIGURED_ERROR_MSG = "%s is not configured";
     public static final String KEY_GPT_PROMPT = "gptPrompt";

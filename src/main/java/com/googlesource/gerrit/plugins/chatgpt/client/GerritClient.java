@@ -49,7 +49,6 @@ public class GerritClient {
         log.info("Decoded responseBody is : {}",new String(debytes));
         return new String(debytes);
 
-
         // return new String(Base64.getMimeDecoder().decode(responseBody));
     }
 
@@ -58,9 +57,13 @@ public class GerritClient {
         return "Basic " + Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
     }
 
-    public void postComment(Configuration config, String fullChangeId, String message) throws Exception {
-        Map<String, String> map = new HashMap<>();
+    public void postComment(Configuration config, String fullChangeId, String message,String code_review_score) throws Exception {
+        Map<String, Object> map = new HashMap<>();
         map.put("message", message);
+        Map<String, Object> labelsMap = new HashMap<>();
+        labelsMap.put("Code-Review", code_review_score);
+        map.put("labels", labelsMap);
+
         String json = gson.toJson(map);
 
         log.info("json : {}",json);
