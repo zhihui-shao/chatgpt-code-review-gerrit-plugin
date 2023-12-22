@@ -1,10 +1,10 @@
-# ChatGPT 代码审查 Gerrit 插件
+# AzureOpenAi 代码审查 Gerrit 插件
 
 [English Version](README.md)
 
 ## 功能
 
-1. 你可以方便地在 Gerrit 中通过 ChatGPT 进行代码审查。在提交 patchSet 后， OpenAI 会以评论的方式提供审查意见。
+1. 你可以方便地在 Gerrit 中通过 AzureOpenAi 调用GPT模型进行代码审查。在提交 patchSet 后， OpenAI 会以评论的方式提供审查意见。
 2. 你可以在评论中 @{gerritUserName} 用户，继续向 ChatGPT 提问，进一步引导 ChatGPT 生成更有针对性的审查意见。
 
 ## 入门
