@@ -207,7 +207,7 @@ $gerrit_site/etc/`secure.config` 文件中进行编辑，并添加以下内容�
 ## 测试
 
 - 你可以运行项目中的单元测试来熟悉插件的项目源码。
-- 如果你想单独测试 Gerrit API 或者 ChatGPT API，你可以参考 CodeReviewPluginIT 中的测试用例。
+- 如果你想单独测试 Gerrit API 或者 azureOpenAi API，你可以参考 CodeReviewPluginIT 中的测试用例。
 
 ## License
 
