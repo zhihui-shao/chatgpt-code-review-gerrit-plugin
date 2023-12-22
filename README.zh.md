@@ -30,7 +30,8 @@
 - `azureModel`：模型名称。
 - `azureApiVersion`：API 版本，它遵循 YYYY-MM-DD 格式。例如：2023-05-15
 - `azureKey`：api-key。
-- `azurePrompt`：
+- `azurePrompt`：模型的prompt
+- `azureTemperature`：温度
 
   为了增强安全性，建议将敏感信息，如 gptToken 和 gerritPassword，存储在一个安全的位置或文件中。本文档后续部分将提供详细的操作指南。
 
