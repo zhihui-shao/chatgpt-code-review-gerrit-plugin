@@ -22,13 +22,13 @@
    Gerrit。
 
 3. **配置：** 在 `$gerrit_site/etc/gerrit.config` 文件中进行基本配置：
-- `gerritAuthBaseUrl`：Gerrit 实例的 URL。类似于：http://192.168.191.1:8082。
+- `gerritAuthBaseUrl`：Gerrit 实例的 URL。类似于：http://IP:端口号
 - `gerritUserName`：Gerrit 用户名。
 - `gerritPassword`：Gerrit http token(不是登录密码)。
 - `globalEnable`：默认值为 false。插件将只会审查指定的仓库，如果设为 true，插件默认会审查所有 review 请求。
 - `azureEndpoint`：Azure OpenAI 资源的名称。例如：https://YOUR_RESOURCE_NAME.openai.azure.com/
 - `azureModel`：模型名称。
-- `azureApiVersion`：API 版本，它遵循 YYYY-MM-DD 格式。
+- `azureApiVersion`：API 版本，它遵循 YYYY-MM-DD 格式。例如：2023-05-15
 - `azureKey`：api-key。
 - `azurePrompt`：
 
