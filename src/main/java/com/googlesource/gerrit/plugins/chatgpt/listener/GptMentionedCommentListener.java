@@ -53,6 +53,5 @@ public class GptMentionedCommentListener implements EventListener {
         } catch (NoSuchProjectException e) {
             log.error("Project not found: {}", projectNameKey, e);
         }
-
     }
 }

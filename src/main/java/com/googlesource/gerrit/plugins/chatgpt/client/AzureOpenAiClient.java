@@ -10,8 +10,6 @@ import org.apache.http.entity.ContentType;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -20,13 +18,16 @@ import java.util.Optional;
 
 @Slf4j
 @Singleton
-public class OpenAiClient {
+public class AzureOpenAiClient {
     private final Gson gson = new Gson();
     private final HttpClientWithRetry httpClientWithRetry = new HttpClientWithRetry();
 
     public String ask(Configuration config, String patchSet) throws Exception {
         HttpRequest request = createRequest(config, patchSet);
+
         log.info("request: {}",request);
+
+
         HttpResponse<String> response = httpClientWithRetry.execute(request);
 
         String body = response.body();
@@ -42,7 +43,6 @@ public class OpenAiClient {
                 extractContentFromLine(line).ifPresent(finalContent::append);
             }
         }
-
         return finalContent.toString();
     }
 
@@ -51,9 +51,9 @@ public class OpenAiClient {
         log.info("requestBody: {}",requestBody);
 
         return HttpRequest.newBuilder()
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + config.getGptToken())
                 .header(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString())
-                .uri(URI.create(URI.create(config.getGptDomain()) + UriResourceLocator.chatCompletionsUri()))
+                .header("api-key" ,config.getAzureOpenAiKey())
+                .uri(URI.create(UriResourceLocator.Azure_Uri(config.getAzureEndpoint(),config.getAzureModel(),config.getAzureApiVersion())))
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
     }
@@ -61,7 +61,7 @@ public class OpenAiClient {
     private String createRequestBody(Configuration config, String patchSet) {
         ChatCompletionRequest.Message systemMessage = ChatCompletionRequest.Message.builder()
                 .role("system")
-                .content(config.getGptPrompt())
+                .content(config.getAzurePrompt())
                 .build();
         ChatCompletionRequest.Message userMessage = ChatCompletionRequest.Message.builder()
                 .role("user")
@@ -71,9 +71,8 @@ public class OpenAiClient {
         List<ChatCompletionRequest.Message> messages = List.of(systemMessage, userMessage);
 
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
-                .model(config.getGptModel())
                 .messages(messages)
-                .temperature(config.getGptTemperature())
+                .temperature(config.getAzureTemperature())
                 .stream(true)
                 .build();
 
@@ -88,8 +87,12 @@ public class OpenAiClient {
         }
         ChatCompletionResponse chatCompletionResponse =
                 gson.fromJson(line.substring("data: ".length()), ChatCompletionResponse.class);
-        String content = chatCompletionResponse.getChoices().get(0).getDelta().getContent();
-        return Optional.ofNullable(content);
+        if(!chatCompletionResponse.getChoices().isEmpty()){
+            String content = chatCompletionResponse.getChoices().get(0).getDelta().getContent();
+            return Optional.ofNullable(content);
+        }else{
+            return Optional.empty();
+        }
     }
 
 }

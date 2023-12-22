@@ -8,10 +8,44 @@ import java.util.Map;
 
 @Slf4j
 public class Configuration {
+    public static final String AZURE_DEFAULT_ENDPOINT = "https://lechuang.openai.azure.com/";
+    public static final String AZURE_DEFAULT_GPT_MODEL = "lechuang-gpt-35-bak";
+    public static final String AZURE_DEFAULT_PROMPT = "作为代码审核助手，请审核此补丁集:";
+    public static final String AZURE_DEFAULT_TEMPERATURE = "0.4";
+    public static final String AZURE_DEFAULT_API_VERSION = "2023-05-15";
+
+    private static final String AZURE_OPENAI_KEY = "azureKey";
+    private static final String AZURE_KEY_ENDPOINT = "azureEndpoint";
+    private static final String AZURE_KEY_GPT_MODEL = "azureModel";
+    public static final String AZURE_KEY_GPT_PROMPT = "azurePrompt";
+    private static final String AZURE_KEY_GPT_TEMPERATURE = "azureTemperature";
+    private static final String AZURE_KEY_API_VERSION = "azureApiVersion";
+
+    public String getAzureApiVersion() {
+        return getString(AZURE_KEY_API_VERSION, AZURE_DEFAULT_API_VERSION);
+    }
+    public String getAzureOpenAiKey() {
+        return getValidatedOrThrow(AZURE_OPENAI_KEY);
+    }
+    public String getAzureEndpoint() {
+        return getString(AZURE_KEY_ENDPOINT, AZURE_DEFAULT_ENDPOINT);
+    }
+    public String getAzureModel() {
+        return getString(AZURE_KEY_GPT_MODEL, AZURE_DEFAULT_GPT_MODEL);
+    }
+    public String getAzurePrompt() {
+        if (configsDynamically.get(AZURE_KEY_GPT_PROMPT) != null) {
+            return configsDynamically.get(AZURE_KEY_GPT_PROMPT).toString();
+        }
+        return getString(AZURE_KEY_GPT_PROMPT, AZURE_DEFAULT_PROMPT);
+    }
+    public double getAzureTemperature() {
+        return Double.parseDouble(getString(AZURE_KEY_GPT_TEMPERATURE, AZURE_DEFAULT_TEMPERATURE));
+    }
+
 
     public static final String OPENAI_DOMAIN = "https://api.openai.com";
     public static final String DEFAULT_GPT_MODEL = "gpt-3.5-turbo";
-//    public static final String DEFAULT_GPT_PROMPT = "Act as a Code Review Helper, please review this patch set: ";
     public static final String DEFAULT_GPT_PROMPT = "Act as a Code Review Helper, please review this patch set: ";
     public static final String NOT_CONFIGURED_ERROR_MSG = "%s is not configured";
     public static final String KEY_GPT_PROMPT = "gptPrompt";
@@ -69,6 +103,7 @@ public class Configuration {
     public String getGptModel() {
         return getString(KEY_GPT_MODEL, DEFAULT_GPT_MODEL);
     }
+
 
     public String getGptPrompt() {
         if (configsDynamically.get(KEY_GPT_PROMPT) != null) {

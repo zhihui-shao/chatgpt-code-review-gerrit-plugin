@@ -11,8 +11,8 @@ import com.google.gerrit.entities.Project;
 import com.google.gerrit.server.events.CommentAddedEvent;
 import com.google.gerrit.server.events.PatchSetCreatedEvent;
 import com.google.gerrit.server.project.NoSuchProjectException;
+import com.googlesource.gerrit.plugins.chatgpt.client.AzureOpenAiClient;
 import com.googlesource.gerrit.plugins.chatgpt.client.GerritClient;
-import com.googlesource.gerrit.plugins.chatgpt.client.OpenAiClient;
 import com.googlesource.gerrit.plugins.chatgpt.client.UriResourceLocator;
 import com.googlesource.gerrit.plugins.chatgpt.config.ConfigCreator;
 import com.googlesource.gerrit.plugins.chatgpt.config.Configuration;
@@ -63,11 +63,13 @@ public class ChatGptReviewTest {
     private void initConfig() {
         config = mock(Configuration.class);
         when(config.getGerritAuthBaseUrl()).thenReturn("http://localhost:9527");
-        when(config.getGptDomain()).thenReturn("http://localhost:9527");
-        when(config.getGptTemperature()).thenReturn(1.0);
         when(config.getMaxReviewLines()).thenReturn(500);
         when(config.getEnabledProjects()).thenReturn("");
         when(config.isProjectEnable()).thenReturn(true);
+        when(config.getAzureOpenAiKey()).thenReturn("bc709d6234e04a80ab2d744eb2434086");
+        when(config.getAzureEndpoint()).thenReturn("http://localhost:9527/");
+        when(config.getAzureModel()).thenReturn("lechuang-gpt-35-bak");
+        when(config.getAzureApiVersion()).thenReturn("2023-05-15");
     }
 
     private void setupMockRequests() {
@@ -89,8 +91,8 @@ public class ChatGptReviewTest {
                 "2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTY4NjgxOTQ1NywibW9kZWwiOiJncHQtMy41LXR1cm" +
                 "JvLTAzMDEiLCJjaG9pY2VzIjpbeyJkZWx0YSI6eyJjb250ZW50IjoiISJ9LCJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI" +
                 "6bnVsbH1dfQ==");
-        WireMock.stubFor(WireMock.post(WireMock.urlEqualTo(URI.create(config.getGptDomain()
-                        + UriResourceLocator.chatCompletionsUri()).getPath()))
+        URI fullUri = URI.create(UriResourceLocator.Azure_Uri(config.getAzureEndpoint(),config.getAzureModel(),config.getAzureApiVersion()));
+        WireMock.stubFor(WireMock.post(WireMock.urlEqualTo(fullUri.getRawPath() + "?" + fullUri.getRawQuery()))
                 .willReturn(WireMock.aResponse()
                         .withStatus(HTTP_OK)
                         .withHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString())
@@ -105,7 +107,7 @@ public class ChatGptReviewTest {
     @Test
     public void patchSetCreatedOrUpdated() throws InterruptedException, NoSuchProjectException, ExecutionException {
         GerritClient gerritClient = new GerritClient();
-        OpenAiClient openAiClient = new OpenAiClient();
+        AzureOpenAiClient openAiClient = new AzureOpenAiClient();
         PatchSetReviewer patchSetReviewer = new PatchSetReviewer(gerritClient, openAiClient);
         ConfigCreator mockConfigCreator = mock(ConfigCreator.class);
         when(mockConfigCreator.createConfig(ArgumentMatchers.any())).thenReturn(config);
@@ -126,14 +128,14 @@ public class ChatGptReviewTest {
         List<LoggedRequest> loggedRequests = WireMock.findAll(requestPatternBuilder);
         Assert.assertEquals(1, loggedRequests.size());
         String requestBody = loggedRequests.get(0).getBodyAsString();
-        Assert.assertEquals("{\"message\":\"Hello!\\n\"}", requestBody);
+        Assert.assertEquals("{\"message\":\"Hello!\\n\",\"labels\":{\"Code-Review\":\"0\"}}", requestBody);
 
     }
 
     @Test
     public void gptMentionedInComment() throws InterruptedException, NoSuchProjectException, ExecutionException {
         GerritClient gerritClient = new GerritClient();
-        OpenAiClient openAiClient = new OpenAiClient();
+        AzureOpenAiClient openAiClient = new AzureOpenAiClient();
         PatchSetReviewer patchSetReviewer = new PatchSetReviewer(gerritClient, openAiClient);
         ConfigCreator mockConfigCreator = mock(ConfigCreator.class);
         when(config.getGerritUserName()).thenReturn("gpt");
@@ -156,7 +158,7 @@ public class ChatGptReviewTest {
         List<LoggedRequest> loggedRequests = WireMock.findAll(requestPatternBuilder);
         Assert.assertEquals(1, loggedRequests.size());
         String requestBody = loggedRequests.get(0).getBodyAsString();
-        Assert.assertEquals("{\"message\":\"Hello!\\n\"}", requestBody);
+        Assert.assertEquals("{\"message\":\"Hello!\\n\",\"labels\":{\"Code-Review\":\"0\"}}", requestBody);
 
     }
 

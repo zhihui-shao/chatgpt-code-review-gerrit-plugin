@@ -18,4 +18,7 @@ public class UriResourceLocator {
         return "/v1/chat/completions";
     }
 
+    public static String Azure_Uri(String endPoint,String modelName,String apiVersion) {
+        return endPoint+"openai/deployments/"+ modelName+ "/chat/completions?api-version=" + apiVersion;
+    }
 }

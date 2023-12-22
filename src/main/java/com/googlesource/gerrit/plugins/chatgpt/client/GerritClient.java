@@ -46,8 +46,8 @@ public class GerritClient {
         org.apache.commons.codec.binary.Base64 base64 = new org.apache.commons.codec.binary.Base64();
         byte[] debytes = base64.decodeBase64(responseBody);
 
-        log.info("Decoded responseBody is : {}",new String(debytes));
-        return new String(debytes);
+        log.info("Decoded responseBody is : {}",new String(debytes,StandardCharsets.UTF_8));
+        return new String(debytes,StandardCharsets.UTF_8);
 
         // return new String(Base64.getMimeDecoder().decode(responseBody));
     }
@@ -57,7 +57,7 @@ public class GerritClient {
         return "Basic " + Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.UTF_8));
     }
 
-    public void postComment(Configuration config, String fullChangeId, String message,String code_review_score) throws Exception {
+    public void postComment(Configuration config, String fullChangeId, String message, String code_review_score) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("message", message);
         Map<String, Object> labelsMap = new HashMap<>();
