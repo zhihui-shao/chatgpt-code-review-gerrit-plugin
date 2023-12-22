@@ -194,7 +194,7 @@ $gerrit_site/etc/`secure.config` 文件中进行编辑，并添加以下内容�
 ### 可选参数
 
 
-- `azurePrompt`：默认提示是 "你是一名专业的代码审核助手，请审核给出的patch set，找出其中的语法错误，审核完毕后请按照固定格式给出评分，代码审核意见用中文。例如：xxxxxxxxx（代码审核意见），code_review_score：+1。这是评分标准：-2：This shall not be submitted；-1：I would prefer this is not submitted as is；0：Reset Vote；+1：Looks good to me, but someone else must approve；+2：Looks good to me, approved。 patch set："。可以按照实际需求修改prompt,但是如果要GPT给出打分，则需要在prompt中要求GPT输出：code_review_score：分数。如果在代码审核意见中未给出分数或者输出格式不符合，则默认为0分。
+- `azurePrompt`：默认提示是 "你是一名专业的代码审核助手，请审核给出的patch set，找出其中的语法错误，审核完毕后请按照固定格式给出评分，代码审核意见用中文。例如：xxxxxxxxx（代码审核意见），code_review_score：+1。这是评分标准：-2：This shall not be submitted；-1：I would prefer this is not submitted as is；0：Reset Vote；+1：Looks good to me, but someone else must approve；+2：Looks good to me, approved。 patch set："。可以按照实际需求修改prompt，但是如果要GPT给出打分，则需要在prompt中要求GPT输出：code_review_score：分数。如果在代码审核意见中未给出分数或者输出格式不符合，则默认为0分。
 - `azureTemperature`: 默认值为 1。范围在 0 到 2 之间。较高的值如 1.8 会使输出结果更具随机性，而较低的值如 0.2 则会让输出更加集中和确定性强。
 - `patchSetReduction`：默认值是 false。如果设置为 true，插件会尝试压缩 patch 内容，包括但不限于多余的空行、制表符、import
   语句等，以便减少 token 数量等。
