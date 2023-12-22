@@ -8,10 +8,10 @@ import java.util.Map;
 
 @Slf4j
 public class Configuration {
-    public static final String AZURE_DEFAULT_ENDPOINT = "https://lechuang.openai.azure.com/";
-    public static final String AZURE_DEFAULT_GPT_MODEL = "lechuang-gpt-35-bak";
-    public static final String AZURE_DEFAULT_PROMPT = "作为代码审核助手，请审核此补丁集:";
-    public static final String AZURE_DEFAULT_TEMPERATURE = "0.4";
+    public static final String AZURE_DEFAULT_ENDPOINT = "";
+    public static final String AZURE_DEFAULT_GPT_MODEL = "";
+    public static final String AZURE_DEFAULT_PROMPT = "你是一名专业的代码审核助手，请审核给出的patch set，找出其中的语法错误，审核完毕后请按照固定格式给出评分，代码审核意见用中文。例如：xxxxxxxxx（代码审核意见），code_review_score：+1。这是评分标准：-2：This shall not be submitted；-1：I would prefer this is not submitted as is；0：Reset Vote；+1：Looks good to me, but someone else must approve；+2：Looks good to me, approved。 patch set：";
+    public static final String AZURE_DEFAULT_TEMPERATURE = "1";
     public static final String AZURE_DEFAULT_API_VERSION = "2023-05-15";
 
     private static final String AZURE_OPENAI_KEY = "azureKey";

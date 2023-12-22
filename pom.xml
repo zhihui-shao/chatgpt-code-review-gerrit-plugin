@@ -25,7 +25,7 @@
                             <Gerrit-PluginName>chatgpt-code-review-gerrit-plugin</Gerrit-PluginName>
                             <Gerrit-Module>com.googlesource.gerrit.plugins.chatgpt.Module</Gerrit-Module>
 
-                            <Implementation-Vendor>Xie Long</Implementation-Vendor>
+                            <Implementation-Vendor>szh</Implementation-Vendor>
                             <Implementation-URL>
                                 https://github.com/xielong/chatgpt-code-review-gerrit-plugin
                             </Implementation-URL>

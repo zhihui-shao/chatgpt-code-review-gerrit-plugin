@@ -35,7 +35,7 @@ public class CodeReviewPluginIT {
     @Test
     public void sayHelloToAzureOpenAi() throws Exception {
         when(config.getAzureEndpoint()).thenReturn(Configuration.AZURE_DEFAULT_ENDPOINT);
-        when(config.getAzureOpenAiKey()).thenReturn("bc709d6234e04a80ab2d744eb2434086");
+        when(config.getAzureOpenAiKey()).thenReturn("");
         when(config.getAzureModel()).thenReturn(Configuration.AZURE_DEFAULT_GPT_MODEL);
         when(config.getAzurePrompt()).thenReturn(Configuration.AZURE_DEFAULT_PROMPT);
         when(config.getAzureTemperature()).thenReturn(0.2);
