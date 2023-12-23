@@ -1,7 +1,5 @@
 # AzureOpenAi 代码审查 Gerrit 插件
 
-[English Version](README.md)
-
 ## 功能
 
 1. 提交代码更改到gerrit后， Gerrit会自动通过 AzureOpenAi 调用GPT模型进行代码审查，给出评论并打分。
