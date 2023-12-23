@@ -10,7 +10,7 @@ import java.util.Map;
 public class Configuration {
     public static final String AZURE_DEFAULT_ENDPOINT = "";
     public static final String AZURE_DEFAULT_GPT_MODEL = "";
-    public static final String AZURE_DEFAULT_PROMPT = "你是一名专业的代码审核助手，请审核给出的patch set，找出其中的语法错误，审核完毕后请按照固定格式给出评分，代码审核意见用中文。例如：xxxxxxxxx（代码审核意见），code_review_score：+1。这是评分标准：-2：This shall not be submitted；-1：I would prefer this is not submitted as is；0：Reset Vote；+1：Looks good to me, but someone else must approve；+2：Looks good to me, approved。 patch set：";
+    public static final String AZURE_DEFAULT_PROMPT = "你是一名专业的代码审核助手，请审核给出的patch set，找出其中的语法错误，代码审核意见用中文回答，审核完毕后按照格式给出评分，评分格式为code_review_score：分数。例如：xxxxxxxxx（代码审核意见），code_review_score：+1。这是评分标准：-2：有明显的语法错误；-1：有少部分语法错误；0：重新打分；+1：代码没有语法错误，但是存在不规范问题；+2：代码没有语法错误，并且符合代码规范。 patch set：";
     public static final String AZURE_DEFAULT_TEMPERATURE = "1";
     public static final String AZURE_DEFAULT_API_VERSION = "2023-05-15";
 
