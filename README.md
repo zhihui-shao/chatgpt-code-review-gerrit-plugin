@@ -176,6 +176,8 @@ $gerrit_site/etc/`secure.config` 文件中进行编辑，并添加以下内容�
     azureEndpoint = {azureEndpoint}
     azureModel = {azureModel}
     azureApiVersion = {azureApiVersion}
+    azureKey = {azureKey}
+    gerritPassword = {gerritPassword}
 
     ...
     # 可选参数
